@@ -33,10 +33,17 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
+# コメントアウトを外す
+Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+
 # エラーメッセージの標準の言語を英語に
 I18n.locale = "en"
 
 RSpec.configure do |config|
+
+# 追記
+  config.include SignInSupport
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
